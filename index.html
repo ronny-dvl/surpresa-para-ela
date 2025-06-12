@@ -15,13 +15,20 @@
       align-items: center;
       height: 100vh;
       color: #d6336c;
+      flex-direction: column;
     }
 
     h1 {
-      position: absolute;
       text-align: center;
       font-size: 3em;
       max-width: 80%;
+      display: none;
+      animation: aparecer 2s ease forwards;
+    }
+
+    @keyframes aparecer {
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
     }
 
     .heart {
@@ -63,22 +70,40 @@
         opacity: 0;
       }
     }
+
+    #botao {
+      padding: 15px 30px;
+      background-color: #ff5e9c;
+      color: white;
+      font-size: 1.5em;
+      border: none;
+      border-radius: 20px;
+      cursor: pointer;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+      transition: transform 0.2s;
+    }
+
+    #botao:hover {
+      transform: scale(1.05);
+    }
   </style>
 </head>
 <body>
 
-  <!-- 🎶 Música de fundo -->
-  <audio autoplay loop>
-  <source src="Those-Eyes.mp3" type="audio/mpeg">
-  Seu navegador não suporta áudio.
-</audio>
+  <button id="botao">Clique aqui</button>
 
-  <h1>
-    Te amo mais que tudo!
-    <br><br>Feliz dia dos namorados ❤️
+  <h1 id="mensagem">
+    Te amo mais que tudo!<br><br>
+    Feliz dia dos namorados ❤️
   </h1>
 
+  <audio id="musica" src="Those-Eyes.mp3"></audio>
+
   <script>
+    const botao = document.getElementById('botao');
+    const mensagem = document.getElementById('mensagem');
+    const musica = document.getElementById('musica');
+
     function createHeart() {
       const heart = document.createElement('div');
       heart.classList.add('heart');
@@ -91,7 +116,12 @@
       }, 5000);
     }
 
-    setInterval(createHeart, 200);
+    botao.addEventListener('click', () => {
+      mensagem.style.display = 'block';
+      musica.play();
+      botao.style.display = 'none';
+      setInterval(createHeart, 200);
+    });
   </script>
 
 </body>
